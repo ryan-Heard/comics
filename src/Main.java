@@ -45,7 +45,7 @@ public class Main {
 	    String search = title.toLowerCase()+" "+searchInt;
 	    search = search.replace(' ', '+');
 	    System.out.println(search);
-	    bookScrape.getScrape(search);
+	    bookScrape.getScrape(search, issue);
 		bookScrape.listOfFoundBooks();
 	    /*userBook.init(title,issue,grade);
 	    userBook.summery();*/
