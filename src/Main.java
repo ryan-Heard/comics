@@ -28,10 +28,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException{
 	    Scanner scan = new Scanner(System.in);
-	    // Book userBook = new Book();
 		Scrape bookScrape = new Scrape();
-		
-		
 	
 	    System.out.println("Hello World");
 	    System.out.println("Book title: ");
@@ -47,10 +44,8 @@ public class Main {
 	    System.out.println(search);
 	    bookScrape.getScrape(search, issue);
 		bookScrape.listOfFoundBooks();
-	    /*userBook.init(title,issue,grade);
-	    userBook.summery();*/
-	
-			//bookScrape.toScrape();
+		
+		scan.close();
   }
 
 }

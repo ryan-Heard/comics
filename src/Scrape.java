@@ -7,11 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Scrape{
 	
 	private ArrayList<Book> found = new ArrayList<Book>();
+	private ArrayList<Book> notInStock = new ArrayList<Book>();
 	private double qIssue;
 	
 	public void getScrape(String query, double issue) throws IOException{
@@ -25,20 +27,30 @@ public class Scrape{
 	public void wipe(Document data){	
 	  Elements content = data.select("td[itemtype=http://schema.org/Product]");
 	  ArrayList clean = new ArrayList();
+	  double price = 0;
+	  
 	  for(Element line: content){
 		 
 		  String condition = line.getElementsByAttributeValue("itemprop", "itemCondition").attr("content");
 		  String name = line.getElementsByAttributeValue("itemprop", "name").attr("content").trim();
+		  //
 		  String[] possibleIssue =name.split("\\s+",-1);
 		 
-		 // System.out.println(possibleIssue[possibleIssue.length-2]);
 		  clean =  clean(possibleIssue);
-
-		  double price = Double.parseDouble(line.getElementsByAttributeValue("itemprop", "price").attr("content"));
-		   name = (String) clean.get(0);
-		   int year =  (int) clean.get(1);
-		  Book temp = new Book(name, qIssue, condition,price, year);
-		  found.add(temp);
+		  
+		  name = (String) clean.get(0);
+		  int year =  (int) clean.get(1);
+		 // System.out.println("*"+clean+'*');
+		  try{
+		   price = Double.parseDouble(line.getElementsByAttributeValue("itemprop", "price").attr("content"));	
+		   MCSBook temp = new MCSBook(name, qIssue, condition,price, year);
+		   found.add(temp);
+		 }
+		  catch(Exception e){
+			  price = 0.0;
+			   MCSBook temp = new MCSBook(name, qIssue, condition,price, year);
+			   notInStock.add(temp);
+		  }
 		  
 	  }	
 	}
@@ -62,11 +74,23 @@ public class Scrape{
 			
 		}
 
-		for(int i  = 0; i < titleEnd; i++){
-			title += dirty[i]+" ";
+		//if(titleEnd == 0){
+			for(int i  = 0; i <= titleEnd; i++){
+				title += dirty[i]+" ";
+			}
+		/*}else{
+			for(int i  = 0; i <= titleEnd; i++){
+				title += dirty[i]+" ";
+			}
+		}*/
+		
+		if(title.isEmpty()){
+			System.out.println(Arrays.asList(dirty));
+			
+			System.exit(0);
 		}
+		
 		title = title.trim();
-		//System.out.println(year);
 		data.add(title);
 		data.add(year);
 		data.add(label);

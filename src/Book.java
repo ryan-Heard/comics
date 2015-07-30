@@ -1,11 +1,13 @@
 
 
-public class Book {
-  private String title;
-  private Double issueNum;
-  private String grade;
-  private Double retailFor;
-  private int year;
+public  abstract class Book {
+  protected String title;
+  protected Double issueNum;
+  protected String grade;
+  protected Double retailFor;
+  protected int year;
+  protected boolean slabbed = false;
+  protected boolean signed =  false;
 
 /**
  * [init description]
@@ -26,15 +28,65 @@ public class Book {
 	  this.year = year;
   }
   
-  public void init(String name, double label, String gradeId,int year){
-    this.title = name;
-    this.issueNum = label;
-    this.grade = gradeId;
-    this.year = year;
-  }
 
   
-  /**
+  public String getTitle() {
+	return title;
+}
+
+public void setTitle(String title) {
+	this.title = title;
+}
+
+public Double getIssueNum() {
+	return issueNum;
+}
+
+public void setIssueNum(Double issueNum) {
+	this.issueNum = issueNum;
+}
+
+public String getGrade() {
+	return grade;
+}
+
+public void setGrade(String grade) {
+	this.grade = grade;
+}
+
+public Double getRetailFor() {
+	return retailFor;
+}
+
+public void setRetailFor(Double retailFor) {
+	this.retailFor = retailFor;
+}
+
+public int getYear() {
+	return year;
+}
+
+public void setYear(int year) {
+	this.year = year;
+}
+
+public boolean isSlabbed() {
+	return slabbed;
+}
+
+public void setSlabbed(boolean slabbed) {
+	this.slabbed = slabbed;
+}
+
+public boolean isSigned() {
+	return signed;
+}
+
+public void setSigned(boolean signed) {
+	this.signed = signed;
+}
+
+/**
    * Returns the description of the book.
    */
   public void summery(){
